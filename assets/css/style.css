@@ -1,0 +1,58 @@
+
+/* set size of root element */
+
+html {
+    font-size: 7px;
+}
+
+
+/* set border-box style for all elements of webpage */
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* set margin of body element as 0 (because there is some margin by default) */
+
+body {
+    margin: 0;
+    background-color: #162a7b;
+}
+
+.main-container {
+    height: 100vh;
+    background-color: #0C1126;
+    overflow-y: auto;
+}
+
+.header {
+height: 10vh;
+ padding: 1.5rem;
+ display: flex;
+ justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 18%;
+}
+.logo img {
+    width: auto;
+    height: 61px;
+    border-radius: 2.5rem;
+    margin-right: 0.8rem;
+    max-height: 6rem;
+    max-width: 18rem;
+}
+
+.fav {
+    color: #CECFD3;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 30px;
+}
+

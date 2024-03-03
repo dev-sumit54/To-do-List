@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do List</title>
+     <link rel="stylesheet" href="./assets/css/style2.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+    </head>
+</head>
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <div class="app-title">
+                <h2>To-do List</h2>
+            </div>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="add your tasks">
+                <button id="add-btn" style="display: none;"><i class="fa fa-plus" ></i></button>
+            </div>
+            <ul id="list-container">
+            </ul>
+            <ul class="task-status">
+                <li class="left"><strong class="remaining-task">3</strong> task left</li>
+                <li class="other"><strong>All</strong></li>
+                <li class="other">Uncomplete</li>
+                <li class="other">Complete</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // get all elements 
+        const inputBox = document.getElementById("input-box");
+        const listContainer = document.getElementById("list-container");
+        const addBtn = document.getElementById("add-btn");
+
+        // add event listener
+        window.addEventListener("load", showTaskData);
+        addBtn.addEventListener("click", addTask);
+        inputBox.addEventListener('keyup',onkeyupEvent);
+
+        listContainer.addEventListener("click", (e)=>{
+            if(e.target.tagName === "LI"){
+                e.target.classList.toggle("checked");
+                saveDataLocalStorage();
+            }else if(e.target.tagName === "SPAN"){
+                e.target.parentElement.remove();
+                saveDataLocalStorage();
+            }
+            countTaskStatus();
+        });
+
+        // add task function
+        function addTask(){
+            if(inputBox.value.trim() === ''){
+                addBtn.style.display="none";
+                alert("you must write something!");
+            }else{
+                addBtn.style.display="block";
+                let li = document.createElement("li");
+                li.innerHTML = inputBox.value;
+                listContainer.appendChild(li);
+                inputBox.value = '';
+                let span = document.createElement("span");
+                span.innerHTML = "x";
+                li.appendChild(span);
+                addBtn.style.display="none";
+            }
+            saveDataLocalStorage();
+            countTaskStatus();
+        }
+        function saveDataLocalStorage(){
+            localStorage.setItem("data", listContainer.innerHTML);
+        }
+
+        // show task data
+        function showTaskData(){
+            const savedData = localStorage.getItem("data");
+            if(savedData){
+                listContainer.innerHTML = savedData;
+            }
+            countTaskStatus();
+        }
+
+        // onkeyup event
+        function onkeyupEvent(){
+            const inputValue1 = inputBox.value.trim();
+            if(inputValue1==""){
+                addBtn.style.display="none";
+            }else{
+                addBtn.style.display="block";
+            }
+        }
+        function countTaskStatus(){
+            const allTasks = document.querySelectorAll('#list-container li');
+            const completedTasks = document.querySelectorAll('.checked');
+            const remainingTask = document.querySelector('.remaining-task');
+
+            const totalLiCount = allTasks.length;
+            const completedTasksCount = completedTasks.length;
+            let remainingCount = totalLiCount - completedTasksCount;
+            remainingTask.textContent  = remainingCount;
+        }
+    </script>
+</body>
+</html>
